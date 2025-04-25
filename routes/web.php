@@ -31,4 +31,10 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('units', UnitController::class);
 });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/inventory/logs', [InventoryLogController::class, 'index'])->name('inventory.logs');
+    Route::get('/inventory/stock-in/{product}', [InventoryLogController::class, 'stockInForm'])->name('inventory.stockin.form');
+    Route::post('/inventory/stock-in/{product}', [InventoryLogController::class, 'stockIn'])->name('inventory.stockin');
 
+    // Later we’ll do stock-out as well
+});
